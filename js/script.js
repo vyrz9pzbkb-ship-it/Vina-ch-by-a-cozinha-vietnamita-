@@ -84,15 +84,18 @@ document.addEventListener('DOMContentLoaded', () => {
   /* ===== Floating tapioca bubbles in hero ===== */
   const bubbleLayer = document.querySelector('.bubbles');
   if (bubbleLayer) {
-    const BUBBLE_COUNT = 22;
+    const isSmallScreen = window.matchMedia('(max-width: 600px)').matches;
+    const BUBBLE_COUNT = isSmallScreen ? 16 : 26;
+    const swayVariants = ['sway-1', 'sway-2', 'sway-3'];
+
     for (let i = 0; i < BUBBLE_COUNT; i++) {
       const bubble = document.createElement('span');
-      bubble.className = 'bubble';
+      bubble.className = `bubble ${swayVariants[i % swayVariants.length]}`;
 
-      const size = 6 + Math.random() * 16;
+      const size = 5 + Math.random() * 20;
       const left = Math.random() * 100;
-      const duration = 8 + Math.random() * 10;
-      const delay = Math.random() * 12;
+      const duration = 14 + Math.random() * 14; // slow, varied ascent
+      const delay = -Math.random() * (duration + 12); // negative delay: some bubbles start mid-flight so bubbles aren't all synced at load
 
       bubble.style.width = `${size}px`;
       bubble.style.height = `${size}px`;
